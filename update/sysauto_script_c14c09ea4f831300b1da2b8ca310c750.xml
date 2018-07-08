@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <condition/>
+        <conditional>false</conditional>
+        <name>Demo:Find overdue Scheduled Jobs</name>
+        <run_as display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period/>
+        <run_start>2018-07-05 01:31:23</run_start>
+        <run_time>1970-01-01 08:00:00</run_time>
+        <run_type>on_demand</run_type>
+        <script><![CDATA[var today = new GlideDateTime();
+
+var overdueNITasks = new GlideRecord('x_58872_needit_needit');
+overdueNITasks.addQuery('due_date','<',today);
+overdueNITasks.addQuery('state','!=',3);
+
+overdueNITasks.query();
+// Write a log message for each overdue NeedIt Task Record
+var i = 1;
+while(overdueNITasks.next()){
+	gs.info("["+i+"]Overdue NeedIt Task record = " + overdueNITasks.number);
+	gs.eventQueue('x_58872_needit.overdueNeeditTask',overdueNITasks, 'jangtran007@gmail.com', gs.getUserName());
+	i++;
+}
+]]></script>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-07-05 01:34:46</sys_created_on>
+        <sys_id>c14c09ea4f831300b1da2b8ca310c750</sys_id>
+        <sys_mod_count>11</sys_mod_count>
+        <sys_name>Demo:Find overdue Scheduled Jobs</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sysauto_script_c14c09ea4f831300b1da2b8ca310c750</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-07-05 04:13:54</sys_updated_on>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>
